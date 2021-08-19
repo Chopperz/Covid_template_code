@@ -1,8 +1,11 @@
+import 'dart:io';
 import 'dart:math' as math;
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_for_test/Model/modelApi.dart';
+import 'package:flutter_for_test/View/detail_v.dart';
 import 'package:flutter_for_test/search.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -75,125 +78,137 @@ class HomeViewWidget {
     Icon iconRun = Icon(Icons.run_circle_outlined, color: Colors.white);
     List<Widget> card() => List.generate(
           4,
-          (index) => Card(
-            elevation: 4,
-            color: Colors.grey.shade100,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Container(
-              width: MediaQuery.of(context).size.width / 2.2,
-              height: 120,
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (index == 0)
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 25,
-                                height: 25,
-                                decoration: BoxDecoration(
-                                  color: Colors.orange,
-                                  borderRadius: BorderRadius.circular(30),
-                                ),
-                                child: iconRun,
-                              ),
-                              const SizedBox(width: 5),
-                              Text('Confirmed Cases', style: textStyle),
-                            ],
-                          ),
-                        if (index == 1)
-                          Row(
+          (index) => GestureDetector(
+            onTap: () {
+              Widget? page;
+              if (index == 0) {
+                page = DetailPage();
+              }
+              Navigator.of(context).push(
+                CupertinoPageRoute(builder: (context) => page!),
+              );
+            },
+            child: Card(
+              elevation: 4,
+              color: Colors.grey.shade100,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Container(
+                width: MediaQuery.of(context).size.width / 2.2,
+                height: 120,
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (index == 0)
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Container(
                                   width: 25,
                                   height: 25,
                                   decoration: BoxDecoration(
-                                    color: Colors.red,
+                                    color: Colors.orange,
                                     borderRadius: BorderRadius.circular(30),
                                   ),
                                   child: iconRun,
                                 ),
                                 const SizedBox(width: 5),
-                                Text('Total Death', style: textStyle),
-                              ]),
-                        if (index == 2)
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 25,
-                                  height: 25,
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                    borderRadius: BorderRadius.circular(30),
+                                Text('Confirmed Cases', style: textStyle),
+                              ],
+                            ),
+                          if (index == 1)
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: iconRun,
                                   ),
-                                  child: iconRun,
-                                ),
-                                const SizedBox(width: 5),
-                                Text('Tontal Recovered', style: textStyle),
-                              ]),
-                        if (index == 3)
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 25,
-                                  height: 25,
-                                  decoration: BoxDecoration(
-                                    color: Colors.purple,
-                                    borderRadius: BorderRadius.circular(30),
+                                  const SizedBox(width: 5),
+                                  Text('Total Death', style: textStyle),
+                                ]),
+                          if (index == 2)
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: iconRun,
                                   ),
-                                  child: iconRun,
-                                ),
-                                const SizedBox(width: 5),
-                                Text('New Cases', style: textStyle),
-                              ]),
-                        const SizedBox(height: 10),
-                        if (index == 0)
-                          Text(covid.newConfirmed.toString(),
-                              style: _dataTextStyle),
-                        if (index == 1)
-                          Text(covid.deaths.toString(), style: _dataTextStyle),
-                        if (index == 2)
-                          Text(covid.newRecovered.toString(),
-                              style: _dataTextStyle),
-                        if (index == 3)
-                          Text(covid.newDeaths.toString(),
-                              style: _dataTextStyle),
-                        Text('people',
-                            style: textStyle.copyWith(
-                                fontSize: 12, color: Colors.grey.shade500)),
-                      ],
+                                  const SizedBox(width: 5),
+                                  Text('Tontal Recovered', style: textStyle),
+                                ]),
+                          if (index == 3)
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      color: Colors.purple,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: iconRun,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text('New Cases', style: textStyle),
+                                ]),
+                          const SizedBox(height: 10),
+                          if (index == 0)
+                            Text(covid.newConfirmed.toString(),
+                                style: _dataTextStyle),
+                          if (index == 1)
+                            Text(covid.deaths.toString(),
+                                style: _dataTextStyle),
+                          if (index == 2)
+                            Text(covid.newRecovered.toString(),
+                                style: _dataTextStyle),
+                          if (index == 3)
+                            Text(covid.newDeaths.toString(),
+                                style: _dataTextStyle),
+                          Text('people',
+                              style: textStyle.copyWith(
+                                  fontSize: 12, color: Colors.grey.shade500)),
+                        ],
+                      ),
                     ),
-                  ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Transform.translate(
-                      offset: Offset(10, 30),
-                      child: Container(
-                        child: Transform.rotate(
-                          angle: math.pi / 1.2,
-                          child: AspectRatio(
-                            aspectRatio: .8,
-                            child: Image.asset(
-                              "assets/icons/wave_icon.png",
-                              fit: BoxFit.fitWidth,
-                              color: Colors.green[700],
+                    Align(
+                      alignment: Alignment.bottomRight,
+                      child: Transform.translate(
+                        offset: Offset(10, 30),
+                        child: Container(
+                          child: Transform.rotate(
+                            angle: math.pi / 1.2,
+                            child: AspectRatio(
+                              aspectRatio: .8,
+                              child: Image.asset(
+                                "assets/icons/wave_icon.png",
+                                fit: BoxFit.fitWidth,
+                                color: Colors.green[700],
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
